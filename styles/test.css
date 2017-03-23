@@ -10,14 +10,16 @@ img {
   margin: 10px;
 }
 
-.box__uploading,
-.box__success,
-.box__error {
-  display: none;
+#drop {
+  min-height: 150px;
+  width: 500px;
+  border: 1px dotted gray;
 }
 
-.box {
-  background-color: white;
-  outline: 2px dashed black;
-  outline-offset: -10px;
+#display {
+}
+
+.dropText {
+  display: block;
+  margin: 5px 5px 0px 10px;
 }
