@@ -9,7 +9,7 @@ function start(response, request) {
   fs.readFile('html/home.html', function(err, html) {
     if ( err ) {
       response.writeHead(404);
-      response.write("Sorry, file not found!");
+      response.write("Sorry, file not found...");
     } else {
       response.writeHead(200, {"Content-Type": "text/html"});
       response.write(html);
@@ -24,6 +24,7 @@ function upload(response, request) {
   var form = new formidable.IncomingForm();
   console.log('about to parse');
   form.parse(request, function(error, fields, files) {
+    console.log(files);
     console.log('parsing done');
 
     /* Possible error on Windows systems: tried to rename to an already 

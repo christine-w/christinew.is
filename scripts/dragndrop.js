@@ -48,7 +48,7 @@ if (window.FileReader) {
           display.setAttribute('id', 'display');
           drop.appendChild(display);
         } 
-        list.innerHTML = 'Loaded: ' + file.name + ' size ' + file.size + ' B';
+        //list.innerHTML = 'Loaded: ' + file.name + ' size ' + file.size + ' B';
         //list.appendChild(display);
         // var fileNumber = list.getElementsByTagName('div').length;
         //status.innerHTML = 'Done loading'; // fileNumber < files.length ? 'Loaded 100% of file ' + fileNumber...
@@ -61,6 +61,15 @@ if (window.FileReader) {
         }
         img.file = file;
         img.src = bin;
+
+        var formData = new FormData();
+        formData.append('upload', file, file.name);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", '/upload', true);
+        xhr.send(formData);
+        list.innerHTML = 'Uploaded: ' + file.name + ' size ' + file.size + ' B';
+
         //list.appendChild(img);
       }.bindToEventHandler(file));
       reader.readAsDataURL(file);
