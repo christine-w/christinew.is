@@ -1,5 +1,4 @@
 // www.htmlgoodies.com/html5/javascript/drag-files-into-the-browser-from-the-desktop-HTML5.html
-console.log( 'Hi!' );
 function addEventHandler(obj, evt, handler) {
   if ( obj.addEventListener ) {
     // W3C method
@@ -13,13 +12,21 @@ function addEventHandler(obj, evt, handler) {
   }
 }
 
-if (window.FileReader) {
-  addEventHandler(window, 'load', function() {
-    //var status = document.getElementById('status');
-    var drop = document.getElementById('drop');
-    var list = document.getElementById('list');
+function advancedUploadSupported() {
+  var span = document.createElement('span');
+  var isDragAndDropSupported = ('draggable' in span) || ('ondragstart' in span && 'ondrop' in span);
+  return isDragAndDropSupported && !(/Mobi/.test(navigator.userAgent)) && 'FormData' in window && 'FileReader' in window;
+}
 
-    status.innerHTML = 'Drag a file and drop it here...';
+if (advancedUploadSupported()) {
+  var form = document.getElementsByClassName('box')[0];
+  form.classList.add('has-advanced-upload');
+
+  addEventHandler(window, 'load', function() {
+    //var drop = document.getElementById('drop');
+    //var list = document.getElementById('list');
+
+    //status.innerHTML = 'Drag a file and drop it here...';
 
     function cancel(e) {
       if (e.preventDefault) { e.preventDefault(); }
@@ -27,10 +34,10 @@ if (window.FileReader) {
     }
 
     // Tells the browser the we *can* drop on this target
-    addEventHandler(drop, 'dragover', cancel);
-    addEventHandler(drop, 'dragenter', cancel);
+    addEventHandler(form, 'dragover', cancel);
+    addEventHandler(form, 'dragenter', cancel);
 
-    addEventHandler(drop, 'drop', function(e) {
+    addEventHandler(form, 'drop', function(e) {
       e = e || window.event;  // get window.event if e argument missing (in IE)
       if (e.preventDefault) { e.preventDefault(); } // stops the browser from redirecting off to the image
 
@@ -46,7 +53,7 @@ if (window.FileReader) {
         if ( !display ) {
           display = document.createElement('div');
           display.setAttribute('id', 'display');
-          drop.appendChild(display);
+          form.appendChild(display);
         } 
         //list.innerHTML = 'Loaded: ' + file.name + ' size ' + file.size + ' B';
         //list.appendChild(display);
@@ -63,12 +70,12 @@ if (window.FileReader) {
         img.src = bin;
 
         var formData = new FormData();
-        formData.append('upload', file, file.name);
+        formData.append('file', file, file.name);
 
         var xhr = new XMLHttpRequest();
         xhr.open("POST", '/upload', true);
         xhr.send(formData);
-        list.innerHTML = 'Uploaded: ' + file.name + ' size ' + file.size + ' B';
+        //list.innerHTML = 'Uploaded: ' + file.name + ' size ' + file.size + ' B';
 
         //list.appendChild(img);
       }.bindToEventHandler(file));
@@ -79,6 +86,40 @@ if (window.FileReader) {
   });
 } else {
   document.getElementById('status').innerHTML = 'Your browser does not support the HTML5 FileReader.';
+}
+
+var fileInput = document.getElementById('file');
+fileInput.addEventListener('change', uploadFile, false);
+
+function uploadFile() {
+  var file = this.files[0];
+  var reader = new FileReader();
+
+  addEventHandler(reader, 'loadend', function(e, file) {
+    var bin = this.result;
+    var display = document.getElementById('display'); 
+    if ( !display ) {
+      display = document.createElement('div');
+      display.setAttribute('id', 'display');
+      form.appendChild(display);
+    }
+    var img = document.getElementById('displayImg');
+    if ( !img ) {
+      var img = document.createElement('img');
+      img.setAttribute('id', 'displayImg');
+      display.appendChild(img);
+    }
+    img.file = file;
+    img.src = bin;
+
+    var formData = new FormData();
+    formData.append('file', file);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", '/upload', true);
+    xhr.send(formData);
+  }.bindToEventHandler(file));
+  reader.readAsDataURL(file);
 }
 
 Function.prototype.bindToEventHandler = function bindToEventHandler() {

@@ -6,21 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="bee_logo3.png" />
     <link rel="apple-touch-icon" href="bee_logo3.png" />
-    <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="test.css" />
-
-    <script src="dragndrop.js"></script>
-
+    <link href="https://fonts.googleapis.com/css?family=Rock+Salt" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="sandbox-styles.css" />
   </head>
 
   <body>
-    <h1>File Display</h1>
+    <h1>File Upload & Display</h1>
     <!--<div id="status">Hi there...</div>-->
-    <div id="drop"><div class='dropText'>Drop file here.</div></div>
-      <form id="file-form" action="/upload" enctype="multipart/form-data" method="post">
-        <!--<input type="file" name="upload" />-->
-        <!-- <input type="submit" value="Upload file" /> -->
+    <!--<div id="drop"><div class='dropText'>Drop file here.</div></div>-->
+      <form class="box" action="/upload" enctype="multipart/form-data" method="post">
+        <div class="box__input">
+          <input id="file" class="box__file" type="file" name="file" />
+          <label for="file"><strong>Choose a file</strong><span class="box__dragndrop"> or drag it here</span>.</label> 
+          <!--<button class="box__button"  type="submit">Upload</button>-->
+        </div>
+        <div class="box__uploading">Uploading&hellip;</div>
+        <!--<div class=box__success">Done!</div>-->
+        <div class="box__error">Error! <span></span>.</div>
       </form>
-    <div id="list".></div>
+    <!--<div id="list"></div>-->
   </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="dragndrop.js"></script>
 </html>

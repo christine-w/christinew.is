@@ -29,10 +29,10 @@ function upload(response, request) {
 
     /* Possible error on Windows systems: tried to rename to an already 
        existing file */
-    fs.rename(files.upload.path, 'images/jasper3.jpg', function(error) {
+    fs.rename(files.file.path, 'images/jasper3.jpg', function(error) {
       if (error) {
         fs.unlink('images/jasper3.jpg');
-        fs.rename(files.upload.path, 'images/jasper3.jpg');
+        fs.rename(files.file.path, 'images/jasper3.jpg');
       }
     });
     response.writeHead(302, {'Location': '/'});
