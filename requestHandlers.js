@@ -6,7 +6,7 @@ formidable = require('formidable');
 function start(response, request) {
   console.log('Request handler \'start\' was called.');
 
-  fs.readFile('html/home.html', function(err, html) {
+  fs.readFile('html/welcome.html', function(err, html) {
     if ( err ) {
       response.writeHead(404);
       response.write("Sorry, file not found...");

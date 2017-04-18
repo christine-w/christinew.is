@@ -1,0 +1,73 @@
+body {
+  margin: 0;
+  font-family: 'Droid Sans', sans-serif;
+}
+
+h1 {
+  text-shadow: 0 0 4px rgba(255,255,255,0.5);
+}
+
+p {
+  text-shadow: 0 0 4px rgba(255,255,255,0.5);
+}
+
+.flex-vertical {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+
+.nav {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.nav > li {
+  list-style-type: none;
+  font-variant: small-caps;
+  font-weight: bold;
+  font-size: 1.5em;
+  display: inline;
+  margin: 10px;
+}
+
+.hero {
+  background-image: linear-gradient(to right, rgba(255,255,255,0.5), rgba(95,95,95,0.5)), url("swan.jpg");
+  background-size: cover;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.quote {
+  font-family: 'Satisfy', cursive;
+  font-size: 2em;
+}
+
+.quoted {
+  text-align: right;
+}
+
+@media all and (max-width:900px) {
+
+  .nav > li {
+    font-size: 1em; 
+  }
+
+  .hero {
+    background-image: linear-gradient(to right, rgba(255,255,255,0.5), rgba(95,95,95,0.5)), url("swan-mobile.jpg");
+  }
+
+  .quote > p {
+    margin: 0;
+  }
+}
+
+.synopsis {
+  background-color: #000000;
+  color: rgb(211,213,214);
+  text-align: center;
+}
